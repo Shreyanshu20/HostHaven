@@ -1,5 +1,112 @@
 <% layout("./layouts/boilerplate.ejs") %>
 
+    <style>
+        .contact-label {
+            color: #4a5568;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group .btn {
+            position: relative;
+        }
+
+        .contact-input {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem 0.75rem 3.25rem;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.2s;
+            line-height: 1.5;
+            height: 45px;
+        }
+
+        .contact-textarea {
+            height: auto;
+            padding-top: 1rem;
+        }
+
+        .contact-input:focus {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+            outline: none;
+        }
+
+        .contact-icon-container {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            height: calc(100% - 2px);
+            width: 2.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9fafb;
+            border-right: 1px solid #e2e8f0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+            pointer-events: none;
+        }
+
+        .textarea-icon {
+            height: 147px;
+            align-items: center;
+            padding-top: 12px;
+        }
+
+        @media (max-width: 576px) {
+            .textarea-icon {
+                height: 142px;
+            }
+        }
+
+        .contact-icon {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .contact-submit-btn {
+            background: linear-gradient(135deg, #3182ce, #2c5282);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(49, 130, 206, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .contact-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(49, 130, 206, 0.3);
+        }
+
+        .contact-submit-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 576px) {
+            .contact-input {
+                font-size: 0.95rem;
+            }
+
+            .card-body {
+                padding: 1.5rem !important;
+            }
+        }
+    </style>
+
     <div class="container py-5">
         <div class="row mb-5 align-items-center contact-hero">
             <div class="col-lg-6">
@@ -72,33 +179,64 @@
 
         <div class="row mb-5">
             <div class="col-md-6 mb-4 mb-md-0">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <h3 class="section-heading mb-4">Send Us a Message</h3>
-                        <form id="contactForm">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Your Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter your name"
+                <div class="card border-0 shadow-sm py-lg-3 px-lg-5 py-sm-1 px-sm-3 py-4 px-4">
+
+                    <h3 class="card-title fw-bold mb-4" style="color: #2d3748;">Send Us a Message</h3>
+
+                    <form id="contactForm" class="needs-validation" novalidate>
+
+                        <div class="contact-input-group mb-4">
+                            <label for="name" class="contact-label mb-2">Your Name</label>
+                            <div class="position-relative">
+                                <div class="contact-icon-container">
+                                    <i class="fas fa-user contact-icon"></i>
+                                </div>
+                                <input type="text" class="contact-input" id="name" placeholder="Enter your name"
                                     required>
                             </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter your email"
+                            <div class="invalid-feedback">Please enter your name.</div>
+                        </div>
+
+                        <div class="contact-input-group mb-4">
+                            <label for="email" class="contact-label mb-2">Email Address</label>
+                            <div class="position-relative">
+                                <div class="contact-icon-container">
+                                    <i class="fas fa-envelope contact-icon"></i>
+                                </div>
+                                <input type="email" class="contact-input" id="email" placeholder="Enter your email"
                                     required>
                             </div>
-                            <div class="mb-3">
-                                <label for="subject" class="form-label">Subject</label>
-                                <input type="text" class="form-control" id="subject"
+                            <div class="invalid-feedback">Please enter a valid email address.</div>
+                        </div>
+
+                        <div class="contact-input-group mb-4">
+                            <label for="subject" class="contact-label mb-2">Subject</label>
+                            <div class="position-relative">
+                                <div class="contact-icon-container">
+                                    <i class="fas fa-tag contact-icon"></i>
+                                </div>
+                                <input type="text" class="contact-input" id="subject"
                                     placeholder="What is this regarding?">
                             </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="5" placeholder="How can we help you?"
-                                    required></textarea>
+                        </div>
+
+                        <div class="contact-input-group mb-4">
+                            <label for="message" class="contact-label mb-2">Message</label>
+                            <div class="position-relative">
+                                <div class="contact-icon-container textarea-icon">
+                                    <i class="fas fa-comment-alt contact-icon"></i>
+                                </div>
+                                <textarea class="contact-input contact-textarea" id="message" rows="5"
+                                    placeholder="How can we help you?" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Send Message</button>
-                        </form>
-                    </div>
+                            <div class="invalid-feedback">Please enter your message.</div>
+                        </div>
+
+                        <button type="submit" class="contact-submit-btn mb-3">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -191,13 +329,9 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
 
+
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const formCard = document.querySelector('.col-md-6:first-child .card');
             const mapContainer = document.getElementById('contactMap');
@@ -236,5 +370,22 @@
             });
 
             window.addEventListener('resize', updateMapHeight);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const contactForm = document.getElementById('contactForm');
+
+            contactForm.addEventListener('submit', function (event) {
+                if (!contactForm.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    event.preventDefault();
+                    alert('Thank you for your message! We will get back to you soon.');
+                    this.reset();
+                }
+
+                contactForm.classList.add('was-validated');
+            });
         });
     </script>

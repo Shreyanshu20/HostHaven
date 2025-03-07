@@ -157,6 +157,11 @@ select:focus {
     border-radius: 8px 0 0 8px;
 }
 
+.input-group .btn{
+    position: absolute;
+    z-index: 11;
+}
+
 .custom-input {
     width: 100%;
     flex: 1 1 auto;
@@ -1363,7 +1368,7 @@ input[type="file"].form-control {
     .navbar-collapse {
         background-color: white;
         border-radius: 12px;
-        padding: 1rem;
+        padding: 1rem 0 0;
     }
 
     .navbar .nav-link {
@@ -1399,13 +1404,12 @@ input[type="file"].form-control {
     }
 
     .navbar-collapse {
-        padding: 1rem 0;
+        padding: 1rem 0 0;
         margin-top: 0.75rem;
     }
 
     .navbar-nav {
         text-align: center;
-        padding: 0.5rem 0;
     }
 
     .auth-buttons {
@@ -1541,7 +1545,6 @@ input[type="file"].form-control {
 
     .navbar-nav {
         padding-top: 1rem;
-        padding-bottom: 0.5rem;
     }
 
     .nav-link {
@@ -2429,11 +2432,6 @@ input[type="file"].form-control {
     .card .d-flex.justify-content-between {
         flex-direction: column;
         gap: 8px;
-    }
-
-    .card .btn {
-        width: 100%;
-        margin-bottom: 0.25rem;
     }
 
     .card form {
