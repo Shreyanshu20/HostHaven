@@ -1,0 +1,256 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                    <div class="card-header bg-gradient-primary border-0 text-white py-3">
+                        <h2 class="card-title mb-0 fs-4">Add New Listing</h2>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <p class="text-muted mb-4">Share your space with travelers around the world</p>
+
+                        <form action="/listings" method="post" class="needs-validation" novalidate
+                            enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label for="listing-title" class="form-label">Title</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-heading"></i>
+                                        </span>
+                                        <input type="text" class="form-control custom-input" id="listing-title"
+                                            name="listing[title]" placeholder="Enter a descriptive title" required>
+                                    </div>
+                                    <div class="form-text">Make your title stand out with key features</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please give a valid title</div>
+                                </div>
+
+                                <div class="col-12 mb-4">
+                                    <label for="listing-description" class="form-label">Description</label>
+                                    <div class="input-group input-group-custom textarea-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-align-left"></i>
+                                        </span>
+                                        <textarea class="form-control custom-input" id="listing-description"
+                                            name="listing[description]" rows="4"
+                                            placeholder="Describe your place to guests" required></textarea>
+                                    </div>
+                                    <div class="form-text">Include what makes your place special, amenities, and the
+                                        surrounding area</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please provide a description</div>
+                                </div>
+
+                                <div class="col-12 mb-4">
+                                    <label for="listing-image" class="form-label">Upload Image</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-image"></i>
+                                        </span>
+                                        <input type="file" class="form-control custom-input" id="listing-image"
+                                            name="listing[image]" accept="image/*" required>
+                                    </div>
+                                    <div class="form-text">Provide a high-quality image that showcases your property
+                                        (recommended size: 1200×800px)</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please upload an image</div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="listing-price" class="form-label">Price (per night)</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-rupee-sign"></i>
+                                        </span>
+                                        <input type="number" class="form-control custom-input" id="listing-price"
+                                            name="listing[price]" placeholder="Price" min="1" required>
+                                    </div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please enter a valid price</div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="listing-location" class="form-label">Location</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </span>
+                                        <input type="text" class="form-control custom-input" id="listing-location"
+                                            name="listing[location]" placeholder="City, State" required>
+                                    </div>
+                                    <div class="form-text">Example: Mumbai, Maharashtra</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please enter a valid location</div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="listing-country" class="form-label">Country</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-globe"></i>
+                                        </span>
+                                        <input type="text" class="form-control custom-input" id="listing-country"
+                                            name="listing[country]" placeholder="Country" required>
+                                    </div>
+                                    <div class="form-text">Example: India</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please enter a valid country</div>
+                                </div>
+
+                                <!-- Category Field -->
+                                <div class="col-md-6 mb-4">
+                                    <label for="listing-category" class="form-label">Category</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-tag"></i>
+                                        </span>
+                                        <select class="form-control custom-input" id="listing-category"
+                                            name="listing[category]" required>
+                                            <option value="" disabled selected>Select a category</option>
+                                            <option value="Beach">Beach</option>
+                                            <option value="Mountain">Mountain</option>
+                                            <option value="City">City</option>
+                                            <option value="Countryside">Countryside</option>
+                                            <option value="Cabin">Cabin</option>
+                                            <option value="Winter">Winter</option>
+                                            <option value="Pool">Pool</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-text">Choose the category that best describes your property</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please select a category</div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-progress-container mb-4 mt-2">
+                                        <div class="form-progress-bar"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-between mt-2">
+                                    <a href="/listings" class="btn btn-outline-secondary px-4">
+                                        <i class="fas fa-arrow-left me-2"></i>Cancel
+                                    </a>
+                                    <button type="submit" class="btn btn-primary px-5 submit-btn">
+                                        <i class="fas fa-plus-circle me-2"></i>Add Listing
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mt-4 rounded-3">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3"><i class="fas fa-lightbulb text-warning me-2"></i>Tips for a Great
+                            Listing</h5>
+                        <div class="tips-container">
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <p>Use a clear, descriptive title that highlights your property's best features</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <p>Add detailed descriptions about amenities, nearby attractions, and special features
+                                </p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <p>Use high-quality images that showcase your property in its best light</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <p>Be accurate with location details to help guests find your property easily</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <p>Set a competitive price based on similar properties in your area</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('.needs-validation');
+            const inputs = form.querySelectorAll('input, textarea, select');
+            const progressBar = document.querySelector('.form-progress-bar');
+
+            function updateProgress() {
+                const totalFields = inputs.length;
+                let completedFields = 0;
+
+                inputs.forEach(input => {
+                    if ((input.tagName === 'SELECT' && input.value !== '') ||
+                        (input.tagName !== 'SELECT' && input.value.trim() !== '')) {
+                        completedFields++;
+                    }
+                });
+
+                const progress = (completedFields / totalFields) * 100;
+                progressBar.style.width = `${progress}%`;
+
+                if (progress > 66) {
+                    progressBar.style.backgroundColor = '#38A169';
+                } else if (progress > 33) {
+                    progressBar.style.backgroundColor = '#DD6B20';
+                } else {
+                    progressBar.style.backgroundColor = '#3182CE';
+                }
+            }
+
+            inputs.forEach(input => {
+                const eventType = input.tagName === 'SELECT' ? 'change' : 'input';
+                input.addEventListener(eventType, updateProgress);
+
+                input.addEventListener('blur', function () {
+                    checkFieldValidity(input);
+
+                    if (form.classList.contains('was-validated')) {
+                        checkFormValidity();
+                    }
+                });
+            });
+
+            function checkFieldValidity(input) {
+                if (input.checkValidity()) {
+                    input.classList.add('is-valid');
+                    input.classList.remove('is-invalid');
+                } else {
+                    input.classList.add('is-invalid');
+                    input.classList.remove('is-valid');
+                }
+            }
+
+            function checkFormValidity() {
+                let isFormValid = true;
+
+                inputs.forEach(input => {
+                    checkFieldValidity(input);
+                    if (!input.checkValidity()) {
+                        isFormValid = false;
+                    }
+                });
+
+                return isFormValid;
+            }
+
+            updateProgress();
+
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+                checkFormValidity();
+            });
+        });
+    </script>

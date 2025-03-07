@@ -1,0 +1,171 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+    <div class="container mt-3">
+        <div class="row mb-4">
+            <div class="col-lg-6 col-md-7 col-12 mb-3 mb-md-0">
+                <h2 class="listings-header">Explore our stays</h2>
+                <p class="text-secondary mb-0">Find your perfect getaway from our curated selection</p>
+            </div>
+            <div class="col-lg-6 col-md-5 col-12 d-flex align-items-center">
+                <form action="/listings" method="GET" class="w-100">
+                    <div class="search-container w-100">
+                        <input type="text" name="search" class="form-control search-input"
+                            placeholder="Search destinations" value="<%= locals.searchQuery || '' %>"
+                            aria-label="Search destinations">
+                        <% if (locals.currentFilter && locals.currentFilter !=='all' ) { %>
+                            <input type="hidden" name="filter" value="<%= locals.currentFilter %>">
+                            <% } %>
+                                <button class="btn btn-primary search-btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <div class="filters-wrapper">
+            <div class="filters-container d-flex overflow-auto py-1">
+
+                <a href="/listings<%= searchQuery ? '?search=' + searchQuery : '' %>"
+                    class="filter-pill <%= (!currentFilter || currentFilter === 'all') ? 'active' : '' %> me-3">
+                    <i class="fas fa-globe-americas me-2"></i>All
+                </a>
+
+                <a href="/listings?filter=mountain<%= searchQuery ? '&search=' + searchQuery : '' %>"
+                    class="filter-pill <%= currentFilter === 'mountain' ? 'active' : '' %> me-3">
+                    <i class="fas fa-mountain me-2"></i>Mountain
+                </a>
+
+                <a href="/listings?filter=beach<%= searchQuery ? '&search=' + searchQuery : '' %>"
+                    class="filter-pill <%= currentFilter === 'beach' ? 'active' : '' %> me-3">
+                    <i class="fas fa-umbrella-beach me-2"></i>Beach
+                </a>
+
+                <a href="/listings?filter=city<%= searchQuery ? '&search=' + searchQuery : '' %>"
+                    class="filter-pill <%= currentFilter === 'city' ? 'active' : '' %> me-3">
+                    <i class="fas fa-city me-2"></i>City
+                </a>
+
+                <a href="/listings?filter=countryside<%= searchQuery ? '&search=' + searchQuery : '' %>"
+                    class="filter-pill <%= currentFilter === 'countryside' ? 'active' : '' %> me-3">
+                    <i class="fas fa-tree me-2"></i>Countryside
+                </a>
+
+                <a href="/listings?filter=pool<%= searchQuery ? '&search=' + searchQuery : '' %>"
+                    class="filter-pill <%= currentFilter === 'pool' ? 'active' : '' %> me-3">
+                    <i class="fas fa-swimming-pool me-2"></i>Pool
+                </a>
+
+                <a href="/listings?filter=winter<%= searchQuery ? '&search=' + searchQuery : '' %>"
+                    class="filter-pill <%= currentFilter === 'winter' ? 'active' : '' %> me-3">
+                    <i class="fas fa-snowflake me-2"></i>Winter
+                </a>
+
+                <a href="/listings?filter=cabin<%= searchQuery ? '&search=' + searchQuery : '' %>"
+                    class="filter-pill <%= currentFilter === 'cabin' ? 'active' : '' %> me-3">
+                    <i class="fas fa-home me-2"></i>Cabin
+                </a>
+
+                <a href="/listings?filter=trending<%= searchQuery ? '&search=' + searchQuery : '' %>"
+                    class="filter-pill <%= currentFilter === 'trending' ? 'active' : '' %> me-3">
+                    <i class="fas fa-fire me-2"></i>Trending
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <% if(listings.length> 0) { %>
+                <% for(let listing of listings) { %>
+                    <div class="col">
+                        <a href="/listings/<%= listing._id %>" class="card-link">
+                            <div class="listing-card">
+                                <div class="listing-img-container">
+                                    <img src="<%= listing.image.url %>" class="listing-img" alt="<%= listing.title %>">
+                                    <% if(listing.category) { %>
+                                        <div class="listing-tag">
+                                            <%= listing.category %>
+                                        </div>
+                                        <% } %>
+                                </div>
+                                <div class="listing-info pt-3">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="listing-title text-truncate">
+                                            <%= listing.title %>
+                                        </h5>
+                                    </div>
+                                    <p class="listing-location text-muted mb-1 text-truncate">
+                                        <i class="fas fa-map-marker-alt me-1 text-primary"></i>
+                                        <%= listing.location %>, <%= listing.country %>
+                                    </p>
+                                    <p class="listing-price">
+                                        <span class="fw-bold">₹<%= listing.price.toLocaleString('en-IN') %></span>
+                                        <span class="text-muted"> / night</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <% } %>
+                        <% } else { %>
+                            <div class="col-12 text-center py-5">
+                                <div class="no-results">
+                                    <i class="fas fa-search mb-3 display-4 text-secondary"></i>
+                                    <h3>No listings found</h3>
+                                    <p class="text-muted">
+                                        We couldn't find any listings matching your criteria.
+                                        <% if (locals.currentFilter && locals.currentFilter !=='all' ||
+                                            locals.searchQuery) { %>
+                                            Try adjusting your filters or search terms.
+                                            <% } %>
+                                    </p>
+                                    <a href="/listings" class="btn btn-outline-primary mt-2">
+                                        <i class="fas fa-sync-alt me-2"></i>Reset filters
+                                    </a>
+                                </div>
+                            </div>
+                            <% } %>
+        </div>
+    </div>
+
+    <% if (totalPages> 1) { %>
+        <div class="d-flex justify-content-center mt-5">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+                        <a class="page-link"
+                            href="/listings?page=<%= currentPage - 1 %><%= locals.currentFilter && locals.currentFilter !== 'all' ? '&filter=' + currentFilter : '' %><%= locals.searchQuery ? '&search=' + searchQuery : '' %>"
+                            aria-label="Previous">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+
+                    <% for(let i=1; i <=totalPages; i++) { %>
+                        <% if (i===1 || i===totalPages || (i>= currentPage - 1 && i <= currentPage + 1)) { %>
+                                <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                    <a class="page-link"
+                                        href="/listings?page=<%= i %><%= locals.currentFilter && locals.currentFilter !== 'all' ? '&filter=' + currentFilter : '' %><%= locals.searchQuery ? '&search=' + searchQuery : '' %>">
+                                        <%= i %>
+                                    </a>
+                                </li>
+                                <% } else if (i===currentPage - 2 || i===currentPage + 2) { %>
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                    <% } %>
+                                        <% } %>
+
+                                            <li class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+                                                <a class="page-link"
+                                                    href="/listings?page=<%= currentPage + 1 %><%= locals.currentFilter && locals.currentFilter !== 'all' ? '&filter=' + currentFilter : '' %><%= locals.searchQuery ? '&search=' + searchQuery : '' %>"
+                                                    aria-label="Next">
+                                                    <i class="fas fa-chevron-right"></i>
+                                                </a>
+                                            </li>
+                </ul>
+            </nav>
+        </div>
+        <% } %>

@@ -1,0 +1,104 @@
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm py-3">
+    <div class="container">
+        <a class="navbar-brand logo" href="/listings">
+            <span class="brand-text"><img src="/assets/logo.png" alt="HostHaven"></span>
+        </a>
+
+        <div class="d-flex align-items-center d-lg-none">
+            <a href="/listings/new" class="btn-add-mobile me-3">
+                <i class="fas fa-plus"></i>
+            </a>
+
+            <% if(currentUser) { %>
+                <div class="dropdown d-lg-none">
+                    <button class="mobile-profile-btn" type="button" id="mobileUserMenu" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="mobileUserMenu">
+                        <li class="dropdown-username">
+                            <%= currentUser.username %>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/user/profile"><i class="fas fa-user me-2"></i>My Profile</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/user/listings"><i class="fas fa-home me-2"></i>My
+                                Listings</a></li>
+                        <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <% } %>
+
+                    <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <i class="fas fa-bars"></i>
+                    </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav me-auto mb-2 mb-lg-0">
+                <a class="nav-link px-3" href="/listings">
+                    <i class="fas fa-compass nav-icon"></i>Explore
+                </a>
+                <a class="nav-link px-3" href="/about">
+                    <i class="fas fa-info-circle nav-icon"></i>About
+                </a>
+                <a class="nav-link px-3" href="/contact">
+                    <i class="fas fa-envelope nav-icon"></i>Contact
+                </a>
+
+                <% if(!currentUser) { %>
+                    <div class="d-block d-lg-none mt-3 pt-3 border-top">
+                        <div class="mobile-auth-links">
+                            <a class="nav-link px-3" href="/login">
+                                <i class="fas fa-sign-in-alt nav-icon"></i>Login
+                            </a>
+                            <a class="nav-link px-3" href="/signup">
+                                <i class="fas fa-user-plus nav-icon"></i>Sign Up
+                            </a>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+
+            <div class="d-none d-lg-flex align-items-center">
+                <a href="/listings/new" class="btn-add-listing">
+                    <i class="fas fa-plus-circle me-2"></i>Add Listing
+                </a>
+
+                <% if(currentUser) { %>
+                    <div class="dropdown ms-4">
+                        <button class="user-menu-btn" type="button" id="userDropdown" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="ms-2 me-1 username-text">
+                                <%= currentUser.username %>
+                            </span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="/user/profile"><i class="fas fa-user me-2"></i>My
+                                    Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/logout"><i
+                                        class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                    <% } else { %>
+                        <div class="auth-buttons ms-4">
+                            <a href="/login" class="btn-login me-2">Login</a>
+                            <a href="/signup" class="btn-signup">Sign Up</a>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,266 @@
+<% layout("./layouts/boilerplate") %>
+
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                    <div class="card-header bg-gradient-primary border-0 text-white py-3">
+                        <h2 class="card-title mb-0 fs-4">Edit Listing</h2>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+                        <p class="text-muted mb-4">Update your property information to attract more guests</p>
+
+                        <form action="/listings/<%= listing._id %>?_method=PUT" method="post" class="needs-validation"
+                            novalidate enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label for="listing-title" class="form-label">Title</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-heading"></i>
+                                        </span>
+                                        <input type="text" class="form-control custom-input" id="listing-title"
+                                            name="listing[title]" value="<%= listing.title %>" required>
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please give a valid title.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-4">
+                                    <label for="listing-description" class="form-label">Description</label>
+                                    <div class="input-group input-group-custom textarea-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-align-left"></i>
+                                        </span>
+                                        <textarea class="form-control custom-input" id="listing-description"
+                                            name="listing[description]" rows="4"
+                                            required><%= listing.description %></textarea>
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please give a valid description.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-4">
+                                    <label for="original-image" class="form-label">Current Image</label>
+                                    <div
+                                        class="current-image-container border rounded-3 overflow-hidden position-relative mb-2">
+                                        <img id="original-image" src="<%= listing.image.url %>"
+                                            alt="<%= listing.title %>" class="img-fluid w-100"
+                                            style="max-height: 300px; object-fit: cover;">
+                                        <div class="image-overlay d-flex align-items-center justify-content-center">
+                                            <button type="button" class="btn btn-sm btn-light" data-bs-toggle="modal"
+                                                data-bs-target="#imagePreviewModal">
+                                                <i class="fas fa-search-plus me-1"></i> View Full Size
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-text">This is the current image for your listing.
+                                        Upload a new one below to replace it.</div>
+                                </div>
+
+                                <div class="col-12 mb-4">
+                                    <label for="listing-image" class="form-label">Upload New Image</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-image"></i>
+                                        </span>
+                                        <input type="file" class="form-control custom-input" id="listing-image"
+                                            name="listing[image]" accept="image/*">
+                                    </div>
+                                    <div class="valid-feedback">
+                                        New image selected!
+                                    </div>
+                                    <div class="form-text">
+                                        Choose a high-quality image that showcases your property best.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="listing-price" class="form-label">Price (per night)</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-rupee-sign"></i>
+                                        </span>
+                                        <input type="number" class="form-control custom-input" id="listing-price"
+                                            name="listing[price]" value="<%= listing.price %>" min="1" required>
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please give a valid price.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="listing-location" class="form-label">Location</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </span>
+                                        <input type="text" class="form-control custom-input" id="listing-location"
+                                            name="listing[location]" value="<%= listing.location %>" required>
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please give a valid location.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="listing-country" class="form-label">Country</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-globe"></i>
+                                        </span>
+                                        <input type="text" class="form-control custom-input" id="listing-country"
+                                            name="listing[country]" value="<%= listing.country %>" required>
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please give a valid country.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="listing-category" class="form-label">Category</label>
+                                    <div class="input-group input-group-custom">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-tag"></i>
+                                        </span>
+                                        <select class="form-control custom-input" id="listing-category"
+                                            name="listing[category]" required>
+                                            <option value="" disabled>Select a category</option>
+                                            <option value="Beach" <%=listing.category==='Beach' ? 'selected' : '' %>
+                                                >Beach</option>
+                                            <option value="Mountain" <%=listing.category==='Mountain' ? 'selected' : ''
+                                                %>>Mountain</option>
+                                            <option value="City" <%=listing.category==='City' ? 'selected' : '' %>>City
+                                            </option>
+                                            <option value="Countryside" <%=listing.category==='Countryside' ? 'selected'
+                                                : '' %>>Countryside</option>
+                                            <option value="Cabin" <%=listing.category==='Cabin' ? 'selected' : '' %>
+                                                >Cabin</option>
+                                            <option value="Winter" <%=listing.category==='Winter' ? 'selected' : '' %>
+                                                >Winter</option>
+                                            <option value="Pool" <%=listing.category==='Pool' ? 'selected' : '' %>>Pool
+                                            </option>
+                                            <option value="Other" <%=listing.category==='Other' ? 'selected' : '' %>
+                                                >Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-text">Choose the category that best describes your property</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please select a category</div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-progress-container mb-4 mt-2">
+                                        <div class="form-progress-bar" style="width: 100%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between gap-3">
+                                        <a href="/listings/<%= listing._id %>"
+                                            class="btn btn-outline-secondary order-2 order-sm-1">
+                                            <i class="fas fa-arrow-left me-2"></i>Cancel
+                                        </a>
+                                        <button type="submit"
+                                            class="btn btn-primary submit-btn px-4 order-1 order-sm-2">
+                                            <i class="fas fa-save me-2"></i>Update Listing
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mt-4 rounded-3">
+                    <div class="card-body p-4">
+                        <h5 class="mb-3"><i class="fas fa-lightbulb text-warning me-2"></i>Tips for a Great Listing</h5>
+                        <div class="tips-container">
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <p>Use a descriptive title that highlights special features.</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <p>Add detailed descriptions to help guests visualize the experience.</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <p>High-quality photos make your listing stand out.</p>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <p>Be accurate about the location and amenities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imagePreviewModalLabel">
+                        <%= listing.title %> - Full Image
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="img-fluid w-100">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('.needs-validation');
+            const imageInput = document.getElementById('listing-image');
+            const progressBar = document.querySelector('.form-progress-bar');
+
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            });
+
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    const originalImage = document.getElementById('original-image');
+
+                    reader.onload = function (e) {
+                        originalImage.src = e.target.result;
+                    }
+
+                    reader.readAsDataURL(file);
+                    document.querySelector('.form-text').innerHTML = `New image selected: <strong>${file.name}</strong>`;
+                }
+            });
+        });
+    </script>

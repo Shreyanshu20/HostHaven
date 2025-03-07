@@ -1,0 +1,240 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+    <div class="container py-5">
+        <div class="row mb-5 align-items-center contact-hero">
+            <div class="col-lg-6">
+                <h1 class="display-4 mb-3">Get In Touch</h1>
+                <p class="lead mb-4">We'd love to hear from you! Whether you have a question about our listings, need
+                    help with a booking, or want to list your property, our team is here to help.</p>
+            </div>
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <img src="https://images.unsplash.com/photo-1596524430615-b46475ddff6e"
+                    class="img-fluid rounded shadow-sm" alt="Customer Support">
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 text-center mb-4">
+                <h2 class="section-heading">Contact Information</h2>
+                <hr class="mx-auto section-divider">
+                <p class="contact-lead mt-4">Reach out to us through any of these channels</p>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 h-100 shadow-sm text-center py-4 contact-info-card">
+                    <div class="card-body">
+                        <div class="rounded-circle bg-light-custom d-flex align-items-center justify-content-center mx-auto mb-3"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-envelope fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">Email</h5>
+                        <p class="card-text mb-2">For general inquiries:</p>
+                        <a href="mailto:info@hosthaven.com">info@hosthaven.com</a>
+                        <p class="card-text mb-2 mt-3">For support:</p>
+                        <a href="mailto:support@hosthaven.com">support@hosthaven.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 h-100 shadow-sm text-center py-4 contact-info-card">
+                    <div class="card-body">
+                        <div class="rounded-circle bg-light-custom d-flex align-items-center justify-content-center mx-auto mb-3"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-phone-alt fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">Phone</h5>
+                        <p class="card-text mb-2">Customer Service:</p>
+                        <a href="tel:+18001234567">+1 (800) 123-4567</a>
+                        <p class="card-text mb-2 mt-3">Business Hours:</p>
+                        <p class="mb-0">Monday-Friday: 9am - 6pm</p>
+                        <p>Weekends: 10am - 4pm</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 h-100 shadow-sm text-center py-4 contact-info-card">
+                    <div class="card-body">
+                        <div class="rounded-circle bg-light-custom d-flex align-items-center justify-content-center mx-auto mb-3"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-map-marker-alt fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">Office</h5>
+                        <p class="card-text mb-2">Headquarters:</p>
+                        <p class="mb-0">42B Maker Chambers IV</p>
+                        <p class="mb-0">Bandra Kurla Complex</p>
+                        <p>Mumbai 400051, India</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="section-heading mb-4">Send Us a Message</h3>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Your Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter your name"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter your email"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="subject"
+                                    placeholder="What is this regarding?">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="5" placeholder="How can we help you?"
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-0" style="position: relative; min-height: 400px;">
+                        <div id="contactMap" class="map-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5 py-5 bg-light-custom rounded">
+            <div class="col-12 text-center mb-4">
+                <h2 class="section-heading">Frequently Asked Questions</h2>
+                <hr class="mx-auto section-divider">
+            </div>
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border mb-3 rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                How do I list my property on HostHaven?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                            data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Listing your property is easy! Simply create an account, click on "Add Listing"
+                                and follow the step-by-step guide to add details, photos, and set your pricing.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border mb-3 rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                What are the fees for booking through HostHaven?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                HostHaven charges a small service fee to both guests and hosts to maintain our platform.
+                                The exact fee depends on the booking value, location, and other factors. All fees are
+                                clearly shown before confirming any reservation.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border mb-3 rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                How do I cancel a reservation?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                            data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                To cancel a reservation, go to "Your Trips" in your account dashboard, find the booking
+                                you wish to cancel, and click on "Cancel Reservation." Please note that cancellation
+                                policies vary by property and are set by hosts.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row py-5 bg-primary text-white rounded">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="fw-bold mb-3">Subscribe to Our Newsletter</h2>
+                <p class="mb-4">Get travel inspiration, featured destinations, and exclusive offers sent straight to
+                    your inbox</p>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control form-control border-0 shadow-sm"
+                                placeholder="Your email address" aria-label="Your email address">
+                            <button class="btn btn-light btn fw-bold px-4 shadow-sm" type="button">
+                                <i class="fas fa-paper-plane me-2"></i>Subscribe
+                            </button>
+                        </div>
+                        <small class="text-white-50">We respect your privacy. Unsubscribe anytime.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const formCard = document.querySelector('.col-md-6:first-child .card');
+            const mapContainer = document.getElementById('contactMap');
+            const mapCardBody = document.querySelector('.col-md-6:last-child .card-body');
+
+            mapboxgl.accessToken = '<%= process.env.MAP_TOKEN %>';
+            const map = new mapboxgl.Map({
+                container: 'contactMap',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [72.8691, 19.0654],
+                zoom: 11
+            });
+
+            const marker = new mapboxgl.Marker({ color: "#3182CE" })
+                .setLngLat([72.8691, 19.0654])
+                .setPopup(
+                    new mapboxgl.Popup({ offset: 25 })
+                        .setHTML(`
+                    <h5 class="mb-1" style="color: #2d3748; font-weight: 600;">HostHaven Headquarters</h5>
+                    <p class="mb-1" style="color: #4a5568;">42B Maker Chambers IV</p>
+                    <p class="mb-0" style="color: #4a5568;">Bandra Kurla Complex, Mumbai 400051</p>
+                `)
+                )
+                .addTo(map);
+
+            map.addControl(new mapboxgl.NavigationControl());
+
+            function updateMapHeight() {
+                const formHeight = formCard.offsetHeight;
+                mapCardBody.style.height = formHeight + 'px';
+                map.resize();
+            }
+
+            map.on('load', function () {
+                setTimeout(updateMapHeight, 200);
+            });
+
+            window.addEventListener('resize', updateMapHeight);
+        });
+    </script>
