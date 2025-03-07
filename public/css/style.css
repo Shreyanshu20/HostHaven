@@ -157,6 +157,11 @@ select:focus {
     border-radius: 8px 0 0 8px;
 }
 
+.custom-input {
+    width: 100%;
+    flex: 1 1 auto;
+}
+
 .password-strength-wrapper {
     margin-top: 0.5rem;
 }
@@ -1873,9 +1878,14 @@ input[type="file"].form-control {
 
 /* form styling */
 .input-group-custom {
+    position: relative;
     display: flex;
     align-items: center;
     width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
 }
 
 .input-group-custom .input-group-text {
