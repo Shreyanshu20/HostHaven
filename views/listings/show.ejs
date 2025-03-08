@@ -5,6 +5,72 @@
         let coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
     </script>
 
+    <style>
+        .bg-primary {
+            background: linear-gradient(135deg, #3182ce, #2c5282);
+        }
+
+        .property-high {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .property-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .property-highlights-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 1.5rem;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+
+        .property-highlight-item {
+            margin-bottom: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .property-highlights-row {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1.5rem;
+            }
+
+            .property-highlight-item {
+                margin-bottom: 0;
+            }
+
+            .property-high {
+                padding-left: 0.5rem;
+            }
+        }
+
+        #map {
+            height: 350px;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 992px) {
+            .map-container {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                margin-top: 1.5rem;
+            }
+
+            #map {
+                flex-grow: 1;
+            }
+        }
+    </style>
+
     <div class="container-fluid p-0 mt-4">
         <div class="listing-image-container mb-5 position-relative">
             <img src="<%= listing.image.url %>" alt="<%= listing.title %>"
@@ -45,6 +111,29 @@
                         <%= listing.description %>
                     </p>
 
+                    <div class="mt-4 mb-4">
+                        <h5 class="mb-3 d-flex align-items-center">
+                            <i class="fas fa-calendar-check text-primary me-2"></i>Availability
+                        </h5>
+                        <p class="small mb-3">Book your stay at this amazing property now!</p>
+
+                        <div class="price-tag mb-3">
+                            <span class="fs-4 fw-bold">&#8377;<%= listing.price.toLocaleString('en-IN') %></span>
+                            <span class="text-muted">/night</span>
+                        </div>
+
+                        <% if(currentUser) { %>
+                            <button class="btn btn-primary btn py-2 w-100" data-bs-toggle="modal"
+                                data-bs-target="#reserveModal">
+                                <i class="fas fa-bookmark me-2"></i>Reserve
+                            </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-primary btn py-2 w-100">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Log in to Reserve
+                                </a>
+                                <% } %>
+                    </div>
+
                     <div class="action-buttons">
                         <div class="row g-3">
                             <% if(currentUser && currentUser._id.equals(listing.owner._id)) {%>
@@ -74,45 +163,46 @@
             <div class="col-lg-5">
                 <div class="additional-info p-4 bg-white rounded-3 shadow-sm h-100">
                     <h5 class="mb-3">Property Highlights</h5>
-                    <div class="row">
-                        <div class="col-6 mb-3">
+                    <div class="property-highlights-row">
+                        <div class="property-highlight-item">
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-home text-primary me-3 fs-4"></i>
-                                <div>
+                                <div class="property-high">
                                     <div class="small text-muted">Type</div>
-                                    <div>Entire Place</div>
+                                    <div class="property-text">Entire Place</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 mb-3">
+                        <div class="property-highlight-item">
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-bed text-primary me-3 fs-4"></i>
-                                <div>
+                                <div class="property-high">
                                     <div class="small text-muted">Bedrooms</div>
-                                    <div>2</div>
+                                    <div class="property-text">2</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 mb-3">
+                        <div class="property-highlight-item">
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-bath text-primary me-3 fs-4"></i>
-                                <div>
+                                <div class="property-high">
                                     <div class="small text-muted">Bathrooms</div>
-                                    <div>1</div>
+                                    <div class="property-text">1</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 mb-3">
+                        <div class="property-highlight-item">
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-users text-primary me-3 fs-4"></i>
-                                <div>
+                                <div class="property-high">
                                     <div class="small text-muted">Max Guests</div>
-                                    <div>4</div>
+                                    <div class="property-text">4</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-4">
+
+                    <div class="mt-5">
                         <h5 class="mb-3">
                             <i class="fas fa-map-marked-alt text-primary me-2"></i>Location
                         </h5>
@@ -327,3 +417,167 @@
                 <% } %>
                     <% } %>
                         <% } %>
+
+                            <div class="modal fade" id="reserveModal" tabindex="-1" aria-labelledby="reserveModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-primary text-white">
+                                            <h5 class="modal-title" id="reserveModalLabel">
+                                                <i class="fas fa-calendar-alt me-2"></i>Reserve Your Stay
+                                            </h5>
+                                            <button type="button" class="btn-close btn-close-white"
+                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="reservationForm">
+                                                <div class="mb-3">
+                                                    <label for="checkIn" class="form-label">Check-in Date</label>
+                                                    <input type="date" class="form-control" id="checkIn"
+                                                        min="<%= new Date().toISOString().split('T')[0] %>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="checkOut" class="form-label">Check-out Date</label>
+                                                    <input type="date" class="form-control" id="checkOut"
+                                                        min="<%= new Date().toISOString().split('T')[0] %>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="guests" class="form-label">Number of Guests</label>
+                                                    <select class="form-control" id="guests" required>
+                                                        <option value="1">1 guest</option>
+                                                        <option value="2" selected>2 guests</option>
+                                                        <option value="3">3 guests</option>
+                                                        <option value="4">4 guests</option>
+                                                    </select>
+                                                </div>
+                                                <div class="reservation-summary p-3 bg-light rounded mb-3">
+                                                    <h6 class="mb-3">Booking Summary</h6>
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <span>&#8377;<%= listing.price.toLocaleString('en-IN') %> x
+                                                                <span id="nightCount">0</span> nights</span>
+                                                        <span id="subtotal">&#8377;0</span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <span>Service fee</span>
+                                                        <span id="serviceFee">&#8377;0</span>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="d-flex justify-content-between fw-bold">
+                                                        <span>Total</span>
+                                                        <span id="totalPrice">&#8377;0</span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-primary" id="confirmReservation">
+                                                <i class="fas fa-check me-1"></i>Confirm Reservation
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="reservationSuccessModal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-success text-white">
+                                            <h5 class="modal-title">
+                                                <i class="fas fa-check-circle me-2"></i>Reservation Confirmed!
+                                            </h5>
+                                            <button type="button" class="btn-close btn-close-white"
+                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-center py-4">
+                                            <div class="mb-3">
+                                                <i class="fas fa-calendar-check text-success"
+                                                    style="font-size: 4rem;"></i>
+                                            </div>
+                                            <h4 class="mb-3">Thank you for your reservation!</h4>
+                                            <p>Your booking at <strong>
+                                                    <%= listing.title %>
+                                                </strong> has been confirmed.</p>
+                                            <p class="text-muted small">A confirmation email has been sent to your
+                                                registered email address.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Got
+                                                it!</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    if (document.getElementById('checkIn') && document.getElementById('checkOut')) {
+                                        const checkIn = document.getElementById('checkIn');
+                                        const checkOut = document.getElementById('checkOut');
+                                        const guests = document.getElementById('guests');
+                                        const nightCount = document.getElementById('nightCount');
+                                        const subtotal = document.getElementById('subtotal');
+                                        const serviceFee = document.getElementById('serviceFee');
+                                        const totalPrice = document.getElementById('totalPrice');
+                                        const confirmBtn = document.getElementById('confirmReservation');
+
+                                        checkIn.addEventListener('change', function () {
+                                            const nextDay = new Date(checkIn.value);
+                                            nextDay.setDate(nextDay.getDate() + 1);
+
+                                            const nextDayStr = nextDay.toISOString().split('T')[0];
+                                            checkOut.min = nextDayStr;
+
+                                            if (checkOut.value && new Date(checkOut.value) <= new Date(checkIn.value)) {
+                                                checkOut.value = nextDayStr;
+                                            }
+
+                                            calculatePrice();
+                                        });
+
+                                        checkOut.addEventListener('change', calculatePrice);
+
+                                        function calculatePrice() {
+                                            if (checkIn.value && checkOut.value) {
+                                                const startDate = new Date(checkIn.value);
+                                                const endDate = new Date(checkOut.value);
+
+                                                const nights = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+                                                if (nights > 0) {
+                                                    const pricePerNight = "<%= listing.price %>";
+                                                    const subtotalAmount = pricePerNight * nights;
+                                                    const serviceFeeAmount = Math.round(subtotalAmount * 0.12);
+                                                    const total = subtotalAmount + serviceFeeAmount;
+
+                                                    nightCount.textContent = nights;
+                                                    subtotal.textContent = '₹' + subtotalAmount.toLocaleString('en-IN');
+                                                    serviceFee.textContent = '₹' + serviceFeeAmount.toLocaleString('en-IN');
+                                                    totalPrice.textContent = '₹' + total.toLocaleString('en-IN');
+                                                }
+                                            }
+                                        }
+
+                                        confirmBtn.addEventListener('click', function () {
+                                            const form = document.getElementById('reservationForm');
+
+                                            if (!checkIn.value || !checkOut.value) {
+                                                alert('Please select both check-in and check-out dates.');
+                                                return;
+                                            }
+
+                                            const reserveModal = bootstrap.Modal.getInstance(document.getElementById('reserveModal'));
+                                            reserveModal.hide();
+
+                                            setTimeout(() => {
+                                                const successModal = new bootstrap.Modal(document.getElementById('reservationSuccessModal'));
+                                                successModal.show();
+                                            }, 500);
+
+
+                                        });
+                                    }
+                                });
+                            </script>
