@@ -1,6 +1,6 @@
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require('./utils/ExpressError.js');
-const { listingSchema, reviewSchema } = require('./schema.js');
+const { listingSchema, reviewSchema, bookingSchema } = require('./schema.js');
 const Listing = require('./models/listings.js');
 const Review = require('./models/review.js');
 
@@ -42,11 +42,11 @@ module.exports.isReviewAuthor = wrapAsync(async (req, res, next) => {
 
 module.exports.validateListing = (req, res, next) => {
     const allowedFields = ['title', 'description', 'price', 'location', 'country', 'category'];
-    
+
     if (req.body.listing && !req.body.listing.category) {
-        req.body.listing.category = 'Other'; 
+        req.body.listing.category = 'Other';
     }
-    
+
     let { error } = listingSchema.validate(req.body);
     if (error) {
         console.log("Validation error:", error.details);

@@ -16,13 +16,19 @@
                         <i class="fas fa-user-circle"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="mobileUserMenu">
-                        <li class="dropdown-username">
+                        <li class="dropdown-username mb-2">
                             <%= currentUser.username %>
+                        </li>
+                        <li><a class="dropdown-item" href="/user/profile"><i class="fas fa-user me-2"></i>My Profile</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/user/profile"><i class="fas fa-user me-2"></i>My Profile</a>
+                        <li><a class="dropdown-item" href="/my-bookings">
+                                <i class="fas fa-calendar-check me-2"></i>My Bookings</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
                         </li>
@@ -83,6 +89,13 @@
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="/user/profile"><i class="fas fa-user me-2"></i>My
                                     Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/my-bookings">
+                                    <i class="fas fa-calendar-check me-2"></i>My Bookings</a>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

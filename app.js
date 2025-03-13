@@ -12,13 +12,15 @@ const ejsMate = require('ejs-mate');
 const ExpressError = require('./utils/ExpressError.js');
 const listingsRouter = require('./routes/listing.js');
 const reviewsRouter = require('./routes/review.js');
+const userRouter = require('./routes/user.js');
+const bookingRouter = require('./routes/booking.js');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user.js');
-const userRouter = require('./routes/user.js');
+
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -27,6 +29,7 @@ app.set("views", path.join(__dirname, "/views"));
 app.engine("ejs", ejsMate)
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(methodOverride('_method'));
 
 main().then(() => {
@@ -90,12 +93,24 @@ app.use("/listings/:id/reviews", reviewsRouter);
 
 app.use("/", userRouter);
 
+app.use("/", bookingRouter);
+
 app.get("/about", (req, res) => {
     res.render("miscellenous/about.ejs");
 });
 
 app.get("/contact", (req, res) => {
     res.render("miscellenous/contact.ejs");
+});
+
+app.use((err, req, res, next) => {
+    if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+        return res.status(err.status || 500).json({
+            success: false,
+            error: err.message || "Something went wrong"
+        });
+    }
+    next(err);
 });
 
 app.all("*", (req, res, next) => {
