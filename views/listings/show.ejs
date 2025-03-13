@@ -355,10 +355,12 @@
                         listing will also be deleted.</p>
                 </div>
                 <div class="modal-footer d-flex justify-content-between flex-wrap gap-2">
-                    <button type="button" class="btn btn-secondary flex-grow-1 flex-sm-grow-0 order-2 order-sm-1" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary flex-grow-1 flex-sm-grow-0 order-2 order-sm-1"
+                        data-bs-dismiss="modal">
                         <i class="fas fa-times me-1 d-none d-sm-inline"></i>Cancel
                     </button>
-                    <form action="/listings/<%=listing._id%>?_method=DELETE" method="post" class="d-inline m-0 flex-grow-1 flex-sm-grow-0 order-1 order-sm-2">
+                    <form action="/listings/<%=listing._id%>?_method=DELETE" method="post"
+                        class="d-inline m-0 flex-grow-1 flex-sm-grow-0 order-1 order-sm-2">
                         <button type="submit" class="btn btn-danger w-100">
                             <i class="fas fa-trash me-1"></i>Delete Permanently
                         </button>
@@ -435,13 +437,13 @@
                                             <form id="reservationForm">
                                                 <div class="mb-3">
                                                     <label for="checkIn" class="form-label">Check-in Date</label>
-                                                    <input type="text" class="form-control" id="checkIn"
-                                                        placeholder="Select check-in date" required>
+                                                    <input type="text" class="form-control flatpickr-input" id="checkIn"
+                                                        placeholder="Select check-in date" readonly>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="checkOut" class="form-label">Check-out Date</label>
-                                                    <input type="text" class="form-control" id="checkOut"
-                                                        placeholder="Select check-out date" required>
+                                                    <input type="text" class="form-control flatpickr-input"
+                                                        id="checkOut" placeholder="Select check-out date" readonly>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="guests" class="form-label">Number of Guests</label>
@@ -472,10 +474,14 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer d-flex flex-wrap gap-2">
-                                            <button type="button" class="btn btn-secondary flex-grow-1 flex-md-grow-0 order-2 order-md-1" data-bs-dismiss="modal">
+                                            <button type="button"
+                                                class="btn btn-secondary flex-grow-1 flex-md-grow-0 order-1 order-md-1"
+                                                data-bs-dismiss="modal">
                                                 <i class="fas fa-times me-1"></i>Cancel
                                             </button>
-                                            <button type="button" class="btn btn-primary flex-grow-1 flex-md-grow-0 order-1 order-md-2" id="confirmReservation">
+                                            <button type="button"
+                                                class="btn btn-primary flex-grow-1 flex-md-grow-0 order-2 order-md-2"
+                                                id="confirmReservation">
                                                 <i class="fas fa-check me-1"></i>Confirm Reservation
                                             </button>
                                         </div>
@@ -502,8 +508,8 @@
                                             <p>Your booking at <strong>
                                                     <%= listing.title %>
                                                 </strong> has been confirmed.</p>
-                                            <p class="text-muted small">A confirmation email has been sent to your
-                                                registered email address.</p>
+                                            <p class="text-muted small">Your booking details will be available in your
+                                                account dashboard.</p>
                                             <div class="alert alert-info mt-3">
                                                 <i class="fas fa-info-circle me-2"></i>
                                                 <strong>Note:</strong> You won't be charged until check-in.
@@ -532,50 +538,70 @@
 
                                         let calculatedTotalPrice = 0;
                                         let calculatedServiceFee = 0;
-                                        let unavailableDates = [];
 
-                                        document.getElementById('reserveModal').addEventListener('show.bs.modal', function () {
-                                            fetch(`/listings/<%= listing._id %>/unavailable-dates`)
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    unavailableDates = data.unavailableDates.map(date => new Date(date));
-
-                                                    initializeDatepickers();
-                                                })
-                                                .catch(error => {
-                                                    console.error("Error fetching unavailable dates:", error);
-                                                    initializeDatepickers();
-                                                });
-                                        });
-
-                                        function initializeDatepickers() {
-                                            const checkInPicker = flatpickr(checkIn, {
-                                                minDate: "today",
-                                                disable: unavailableDates,
-                                                onChange: function (selectedDates, dateStr) {
+                                        checkIn._flatpickr = flatpickr(checkIn, {
+                                            minDate: "today",
+                                            disableMobile: true,
+                                            allowInput: false,
+                                            dateFormat: "Y-m-d",
+                                            onChange: function (selectedDates, dateStr) {
+                                                if (selectedDates[0]) {
                                                     const nextDay = new Date(selectedDates[0]);
                                                     nextDay.setDate(nextDay.getDate() + 1);
 
-                                                    checkOutPicker.set('minDate', nextDay);
+                                                    if (checkOut._flatpickr) {
+                                                        checkOut._flatpickr.set('minDate', nextDay);
 
-                                                    if (checkOutPicker.selectedDates[0] &&
-                                                        checkOutPicker.selectedDates[0] <= selectedDates[0]) {
-                                                        checkOutPicker.setDate(nextDay);
+                                                        if (checkOut._flatpickr.selectedDates[0] &&
+                                                            checkOut._flatpickr.selectedDates[0] <= selectedDates[0]) {
+                                                            checkOut._flatpickr.setDate(nextDay);
+                                                        }
                                                     }
-
-                                                    calculatePrice();
-                                                },
-                                                onClose: function () {
-                                                    calculatePrice();
                                                 }
-                                            });
+                                                calculatePrice();
+                                            }
+                                        });
 
-                                            const checkOutPicker = flatpickr(checkOut, {
-                                                minDate: checkIn.value ? new Date(checkIn.value + 86400000) : "today",
-                                                disable: unavailableDates,
-                                                onClose: function () {
-                                                    calculatePrice();
+                                        checkOut._flatpickr = flatpickr(checkOut, {
+                                            minDate: checkIn.value ? new Date(new Date(checkIn.value).getTime() + 86400000) : "today",
+                                            disableMobile: true,
+                                            allowInput: false,
+                                            dateFormat: "Y-m-d",
+                                            onChange: function () {
+                                                calculatePrice();
+                                            }
+                                        });
+
+                                        const reserveModal = document.getElementById('reserveModal');
+                                        if (reserveModal) {
+                                            reserveModal.addEventListener('shown.bs.modal', function () {
+                                                if (!checkIn._flatpickr || !checkOut._flatpickr) {
+                                                    setTimeout(() => {
+                                                        checkIn._flatpickr = flatpickr(checkIn, {
+                                                            minDate: "today",
+                                                            disableMobile: true,
+                                                            dateFormat: "Y-m-d"
+                                                        });
+
+                                                        checkOut._flatpickr = flatpickr(checkOut, {
+                                                            minDate: "today",
+                                                            disableMobile: true,
+                                                            dateFormat: "Y-m-d"
+                                                        });
+                                                    }, 0);
                                                 }
+
+                                                fetch(`/listings/<%= listing._id %>/unavailable-dates`)
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        const disabledDates = data.unavailableDates.map(date => new Date(date));
+
+                                                        if (checkIn._flatpickr) checkIn._flatpickr.set('disable', disabledDates);
+                                                        if (checkOut._flatpickr) checkOut._flatpickr.set('disable', disabledDates);
+                                                    })
+                                                    .catch(error => {
+                                                        console.error("Error fetching unavailable dates:", error);
+                                                    });
                                             });
                                         }
 
@@ -645,4 +671,29 @@
                                         });
                                     }
                                 });
+
+                                function resetDatePickers() {
+                                    if (checkIn._flatpickr) {
+                                        checkIn._flatpickr.destroy();
+                                    }
+                                    if (checkOut._flatpickr) {
+                                        checkOut._flatpickr.destroy();
+                                    }
+
+                                    checkIn._flatpickr = flatpickr(checkIn, {
+                                        minDate: "today",
+                                        disableMobile: true,
+                                        dateFormat: "Y-m-d"
+                                    });
+
+                                    checkOut._flatpickr = flatpickr(checkOut, {
+                                        minDate: "today",
+                                        disableMobile: true,
+                                        dateFormat: "Y-m-d"
+                                    });
+
+                                    checkIn.value = '';
+                                    checkOut.value = '';
+                                    calculatePrice();
+                                }
                             </script>

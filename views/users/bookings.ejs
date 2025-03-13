@@ -115,7 +115,7 @@
                                 <% if (booking.status==="confirmed" ) { %>
                                     <button class="btn btn-outline-danger w-100" data-bs-toggle="modal"
                                         data-bs-target="#cancelModal<%= booking._id %>">
-                                        <i class="fas fa-times-circle me-1"></i>Cancel Booking
+                                        <i class="fas fa-times me-1"></i>Cancel Booking
                                     </button>
                                     <% } else if (booking.status==="canceled" ) { %>
                                         <a href="/listings/<%= booking.listing._id %>"
@@ -166,11 +166,13 @@
                                     <button type="button"
                                         class="btn btn-secondary w-100 w-sm-auto mb-2 mb-sm-0 order-2 order-sm-1"
                                         data-bs-dismiss="modal">
+                                        <i class="fas fa-check me-1"></i>
                                         Keep Booking
                                     </button>
                                     <form action="/bookings/<%= booking._id %>/cancel?_method=PATCH" method="POST"
                                         class="w-100 w-sm-auto order-1 order-sm-2">
                                         <button type="submit" class="btn btn-danger w-100">
+                                            <i class="fas fa-times me-1"></i>
                                             Cancel Booking
                                         </button>
                                     </form>
