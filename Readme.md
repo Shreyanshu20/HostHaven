@@ -29,7 +29,6 @@ HostHaven is a full-stack web application for property listings, bookings, and r
 - **Guest:** Can browse listings, view details, and read reviews.
 - **User (Authenticated):** Can create listings, book properties, write reviews, and manage their profile and bookings.
 - **Owner:** Can edit or delete their own listings.
-- **Review Author:** Can edit or delete their own reviews.
 
 ---
 
